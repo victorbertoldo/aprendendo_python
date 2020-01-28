@@ -3,6 +3,7 @@ lista_peso = []
 for i in range(1,8):
     print('Preencha o peso de 7 pessoas!')
     peso = int(input(f'Digite o peso da pessoa nº {i}:'))
+    #tambem funciona: lista_peso.append(int(input('Digite ...'))
 
     lista_peso.append(peso)
 
@@ -17,6 +18,6 @@ for j in range(0,7):
         qtd += 1
 
 print(f'A quantidade de pessoas com peso acima de 90 kg é:{qtd}.')
-print(f'A média dos pesos é {media}.')
+print(f'A média dos pesos é {media:.2f}.')
 
 #print(lista_peso)
