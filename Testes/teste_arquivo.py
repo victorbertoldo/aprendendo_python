@@ -20,7 +20,7 @@ print(leia)
 
 arquivo = open('arquivoTeste.txt', 'r')
 
-txt = arquivo.readlines() # le uma linha de cada vez... cada linha tem um indice de acordo com a ordem do arquiv
+txt = arquivo.readlines() # le uma linha de cada vez... cada linha tem um indice de acordo com a ordem do arquivo
 
 for i in txt:
     print(i)
