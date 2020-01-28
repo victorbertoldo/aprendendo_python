@@ -12,6 +12,14 @@ a = retorna()
 
 print(a)
 
+def retorna():
+    return 41, 25
+
+a, b = retorna()
+
+print(a)
+print(b)
+
 '''
 [] lista
 {} dicionario
