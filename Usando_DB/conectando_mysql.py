@@ -8,7 +8,6 @@ conexao = pymysql.connect(
     db='cursopython',
     charset='utf8mb4',
     cursorclass= pymysql.cursors.DictCursor
-
 )
 
 #x = 'create table pessoas(nome varchar(50),	idade int,	cep varchar(20),	cpf varchar(11)); '
