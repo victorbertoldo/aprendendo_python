@@ -76,10 +76,28 @@ def listarProdutos():
         with conexao.cursor() as cursor:
             cursor.execute('select * from produtos')
             produtosCadastrados = cursor.fetchall()
-            print(produtosCadastrados)
+            #print(produtosCadastrados)
     except:
         print('Erro ao conectar ao Banco de Dados!')
 
+    for i in produtosCadastrados:
+        produtos.append(i)
+
+    if len(produtos) != 0:
+        for i in range(0, len(produtos)):
+            print(produtos[i])
+    else:
+        print('Nenhum produto cadastrado.')
+
+def excluirProdutos():
+    idDeletar = int(input('Digite o id referente ao produto que deseja apagar:'))
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute('delete from produtos where id = {}'.format(idDeletar))
+
+    except:
+        print('Erro ao excluir o produto!')
 while not autenticado:
     opcao = int(input('Digite 1 para logar e 2 para cadastrar:'))
 
@@ -107,3 +125,8 @@ if autenticado == True:
                 cadastrarProdutos()
             elif decisaoUsuario == 2:
                 listarProdutos()
+
+                delete = int(input('Digite 1 para excluir um produto ou 2 para sair:'))
+
+                if delete == 1:
+                    excluirProdutos()
