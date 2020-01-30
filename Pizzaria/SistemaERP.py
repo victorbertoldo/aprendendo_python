@@ -12,11 +12,10 @@ conexao = pymysql.connect(
 
 autenticado = False
 
-def logarCadastrar():
+def logarCadastrar(opcao):
     usuarioExistente = 0
     autenticacao = False
     usuarioMaster = False
-
     if opcao == 1:
         nome = input('Digite seu nome:')
         senha = input('Digite sua senha:')
@@ -28,6 +27,7 @@ def logarCadastrar():
                 elif linha['nivel'] ==2:
                     usuarioMaster = True
                 autenticacao = True
+                break
             else:
                 autenticacao = False
 
@@ -54,6 +54,16 @@ def logarCadastrar():
             except:
                 print('Erro ao inserir os dados')
     return autenticacao, usuarioMaster
+
+def cadastrarProdutos():
+    nome = input('Digite o nome do produto:')
+    ingredientes = input('Digite os ingredientes dos produtos')
+    grupo = input('Informe o grupo, o qual o produto pertence:')
+    preco = float(input('Digite o preço do produto:'))
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute('')
 
 
 while not autenticado:
