@@ -12,7 +12,7 @@ conexao = pymysql.connect(
 
 autenticado = False
 
-def logarCadastrar(opcao):
+def logarCadastrar():
     usuarioExistente = 0
     autenticacao = False
     usuarioMaster = False
@@ -63,7 +63,11 @@ def cadastrarProdutos():
 
     try:
         with conexao.cursor() as cursor:
-            cursor.execute('')
+            cursor.execute('insert into produtos (nome, ingredientes, grupo, preco) values (%s,%s,%s,%s)',(nome, ingredientes, grupo, preco))
+            conexao.commit()
+            print('Produto cadastrado com sucesso!')
+    except:
+        print('Erro ao inserir produtos no banco de dados')
 
 
 while not autenticado:
@@ -81,3 +85,10 @@ while not autenticado:
 
 if autenticado == True:
     print('Autenticado!')
+    decisaoUsuario = 1
+
+    while decisaoUsuario != 0:
+        decisaoUsuario = int(input('Digite 0 para sair, 1 para cadastrar produtos'))
+
+        if decisaoUsuario == 1:
+            cadastrarProdutos()
