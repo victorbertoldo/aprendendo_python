@@ -134,6 +134,41 @@ def listarPedidos():
             except:
                 print('Erro ao entregar pedido')
 
+def gerarEstatistica():
+    nomeProdutos = []
+    nomeProdutos.clear()
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute('select * from produtos')
+            produtos = cursor.fetchall()
+    except:
+        print('Erro ao conectar no banco de dados!')
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute('select * from estatisticaVendido')
+            vendido = cursor.fetchall()
+    except:
+        print('Erro ao conectar no banco de dados!')
+
+    estado = int(input('Digite 0 para sair, 1 para pesquisar por nome e 2 para pesquisar por grupo:'))
+
+    if estado == 1:
+        decisao3 = int(input('Digite 1 ppara pesquisar por dinheiro e 2 por quantidade unitaria:'))
+        if decisao3 == 1:
+
+            for i in produtos:
+                nomeProdutos.append(i['nome'])
+
+            valores = []
+            valores.clear()
+
+            for h in range(0,len(nomeProdutos)):
+                somaValor = -1
+
+
+
 
 
 while not autenticado:
