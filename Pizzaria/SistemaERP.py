@@ -1,4 +1,5 @@
 import pymysql.cursors
+import matplotlib.pyplot as plt
 
 conexao = pymysql.connect(
     host='localhost',
@@ -147,7 +148,7 @@ def gerarEstatistica():
 
     try:
         with conexao.cursor() as cursor:
-            cursor.execute('select * from estatisticaVendido')
+            cursor.execute('select * from estatisticavendido')
             vendido = cursor.fetchall()
     except:
         print('Erro ao conectar no banco de dados!')
@@ -166,8 +167,121 @@ def gerarEstatistica():
 
             for h in range(0,len(nomeProdutos)):
                 somaValor = -1
+                for i in vendido:
+                    if i['nome'] == nomeProdutos[h]:
+                        somaValor += i['preco']
 
+                if somaValor == -1:
+                    valores.append(0)
+                elif somaValor > 0:
+                    valores.append(somaValor+1)
 
+            plt.plot(nomeProdutos, valores)
+            plt.ylabel('Qtd vendida em reais')
+            plt.xlabel('Produtos')
+            plt.show()
+
+        if decisao3 == 2:
+            grupoUnico = []
+            grupoUnico.clear()
+
+            try:
+                with conexao.cursor() as cursor:
+                    cursor.execute('select * from produtos')
+                    grupo = cursor.fetchall()
+            except:
+                print('erro na consulta')
+
+            try:
+                with conexao.cursor() as cursor:
+                    cursor.execute('select * from estatisticavendido')
+                    vendidoGrupo = cursor.fetchall()
+
+            except:
+                print('erro na consulta')
+
+            for i in grupo:
+                grupoUnico.append(i['nome'])
+
+            grupoUnico = sorted(set(grupoUnico))
+            qntFinal = []
+            qntFinal.clear()
+
+            for h in range(0, len(grupoUnico)):
+                qntUnitaria = 0
+                for i in vendidoGrupo:
+                    if grupoUnico[h] == i['nome']:
+                        qntUnitaria += 1
+                qntFinal.append(qntUnitaria)
+
+            plt.plot(grupoUnico, qntFinal)
+            plt.ylabel('Qtd Unitaria vendida')
+            plt.xlabel('produtos')
+            plt.show()
+
+    elif estado ==2:
+        decisao3 = int(input('Digite 1 ppara pesquisar por dinheiro e 2 por quantidade unitaria:'))
+        if decisao3 == 1:
+
+            for i in produtos:
+                nomeProdutos.append(i['grupo'])
+
+            valores = []
+            valores.clear()
+
+            for h in range(0, len(nomeProdutos)):
+                somaValor = -1
+                for i in vendido:
+                    if i['grupo'] == nomeProdutos[h]:
+                        somaValor += i['preco']
+
+                if somaValor == -1:
+                    valores.append(0)
+                elif somaValor > 0:
+                    valores.append(somaValor + 1)
+
+            plt.plot(nomeProdutos, valores)
+            plt.ylabel('Qtd vendida em reais')
+            plt.xlabel('Produtos')
+            plt.show()
+
+        if decisao3 == 2:
+            grupoUnico = []
+            grupoUnico.clear()
+
+            try:
+                with conexao.cursor() as cursor:
+                    cursor.execute('select * from produtos')
+                    grupo = cursor.fetchall()
+            except:
+                print('erro na consulta')
+
+            try:
+                with conexao.cursor() as cursor:
+                    cursor.execute('select * from estatisticavendido')
+                    vendidoGrupo = cursor.fetchall()
+
+            except:
+                print('erro na consulta')
+
+            for i in grupo:
+                grupoUnico.append(i['grupo'])
+
+            grupoUnico = sorted(set(grupoUnico))
+            qntFinal = []
+            qntFinal.clear()
+
+            for h in range(0, len(grupoUnico)):
+                qntUnitaria = 0
+                for i in vendidoGrupo:
+                    if grupoUnico[h] == i['grupo']:
+                        qntUnitaria += 1
+                qntFinal.append(qntUnitaria)
+
+            plt.plot(grupoUnico, qntFinal)
+            plt.ylabel('Qtd Unitaria vendida')
+            plt.xlabel('grupo')
+            plt.show()
 
 
 
@@ -192,7 +306,7 @@ if autenticado == True:
         decisaoUsuario = 1
 
         while decisaoUsuario != 0:
-            decisaoUsuario = int(input('Digite 0 para sair, 1 para cadastrar produtos e 2 para listar produtos, 3 para listar os pedidos:'))
+            decisaoUsuario = int(input('Digite 0 para sair, 1 para cadastrar produtos e 2 para listar produtos, 3 para listar os pedidos e 4 para visualizar as estatisticas:'))
 
             if decisaoUsuario == 1:
                 cadastrarProdutos()
@@ -206,3 +320,5 @@ if autenticado == True:
 
             elif decisaoUsuario == 3:
                 listarPedidos()
+            elif decisaoUsuario == 4:
+                gerarEstatistica()
