@@ -1,7 +1,12 @@
 from tkinter import *
 
 def calcular():
-    print(peso.get())
+    peso1 = float(peso.get())
+    altura1 = float(altura.get())
+
+    imc = peso1/altura1**2
+
+    resposta['text'] = imc
 
 janela = Tk()
 janela.title('Calcule seu IMC!')
